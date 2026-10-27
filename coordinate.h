@@ -1,3 +1,4 @@
+// provided in instructions 
 struct _coordinate
 {
   float x;
