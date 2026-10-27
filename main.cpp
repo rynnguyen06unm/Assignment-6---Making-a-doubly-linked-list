@@ -32,7 +32,17 @@ void backward_display(Coordinate *list_end)
 
 void delete_coordinate(Coordinate *list_beginning, int coord_id_to_delete)
 {
-  
+  Coordinate *target_coord = list_beginning;
+  while (target_coord != nullptr && target_coord->coord_id != coord_id_to_delete)
+    target_coord = target_coord->next;
+ 
+  if (target_coord == nullptr)
+    return;
+ 
+  target_coord->previous->next = target_coord->next;
+  if (target_coord->next != nullptr)
+    target_coord->next->previous = target_coord->previous;
+  delete target_coord;
 }
 
 int list_length(Coordinate *list_beginning)
@@ -58,7 +68,7 @@ void closest_to(Coordinate *list_beginning, float x, float y)
     if (d2 < closest_squared)
     {
       closest_squared = d2;
-      closest = current_coord; 
+      closest = current_coord;
     }
   }
  
@@ -83,9 +93,22 @@ int main()
   ending = ending->next;
  
   std::cout << "Created " << list_length(starting) << " coordinates.\n\n";
-  std::cout << "Forward display:\n"; forward_display(starting);
+  std::cout << "Forward display:\n"; forward_display(starting); std::cout << "\n";
   std::cout << "Backward display:\n"; backward_display(ending); std::cout << "\n";
-  closest_to(starting, 50.0f, 50.0f);
+  closest_to(starting, 50.0f, 50.0f); std::cout << "\n";
   
+  int id_to_delete = 2;
+  std::cout << "Deleting id " << id_to_delete << "...\n"; delete_coordinate(starting, id_to_delete);
+  std::cout << "List length is now " << list_length(starting) << ".\n\n";
+  std::cout << "Forward display after delete:\n"; forward_display(starting); std::cout << "\n";
+  closest_to(starting, 50.0f, 50.0f);
+
+  while (starting != nullptr)
+  {
+    Coordinate *next = starting->next;
+    delete starting;
+    starting = next;
+  }
+
   return 0;
 }
