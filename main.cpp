@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 
   // deletes coordinate id 5 and displays updated list 
   int id_to_delete = 5;
-  std::cout << "Deleting id " << id_to_delete << "...\n"; delete_coordinate(starting, id_to_delete);
+  std::cout << "Deleting id " << id_to_delete << "\n"; delete_coordinate(starting, id_to_delete);
   std::cout << "List length is now " << list_length(starting) << ".\n\n";
   std::cout << "Forward display after delete:\n"; forward_display(starting); std::cout << "\n";
   closest_to(starting, 50.0f, 50.0f); // closest check to middle of 0-100 range, (50, 50)  
